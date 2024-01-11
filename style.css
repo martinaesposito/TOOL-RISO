@@ -11,13 +11,13 @@ html,body {
 #sectionContainer {
     display: flex;
     flex-direction: column;
-    padding-left: 0.5%;
+    width: 100%;
 }
 
 .section {
     margin: 0.5%;
     height: auto;
-    width: 100%;
+    width: 95%;
     
     /* padding-top: 0.5%; */
     padding-bottom: 1%;
