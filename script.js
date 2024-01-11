@@ -392,7 +392,7 @@ function chooseColConversion() {
       optionCtn.child(s);
       o = s.option(coolorsRGB[i]);
       s.child(o);
-      
+
       changed = false;
       console.log(changed)
 
@@ -425,7 +425,7 @@ function chooseColConversion() {
     s.class("OPTION BLACK");
     s.id("black");
     s.style("background-color", "#000000");
-    s.style("color", "#ffffff");
+    //s.style("color", "#ffffff");
 
     changed = true;
     console.log(changed)
@@ -446,6 +446,12 @@ function chooseColConversion() {
 
     cooolors = Array.from(selectAll("option", e)); //prendo tutti gli elementi option
     allCoooloors.push([...cooolors]); //e li pusho in un array di array
+
+    let blackOpt= cooolors.find((j)=> j.innerText="black")
+    
+    blackOpt.style("color", "#ffffff")
+    console.log(blackOpt)
+
 
     e.changed(() => {
 
@@ -514,15 +520,14 @@ function infoCheck() {
       invalidS = divArray[i];
       console.log(invalidS);
 
-      invalidS.addClass("bounce");
-    //   void invalidS.offsetHeight;
+      invalidS.addClass("bounce"); //animazione di errore
 
       error = true;
     }
   });
 
   
-  //seleziona uno dei colori a disposizione della libreria
+  //booleana che controlla che sia stata selezionato uno dei colori a disposizione della libreria
   if(changed == false){
     Aaalert()
     
