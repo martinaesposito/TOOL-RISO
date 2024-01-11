@@ -292,7 +292,7 @@ function setup() {
     setColourProfile.class("input");
     chooseColConversion;
 
-    console.log("cambio");
+    //console.log("cambio");
   });
 
 
@@ -373,8 +373,10 @@ function handleImage(file) {
 
 //COLOR CONVERSION
 function chooseColConversion() {
+
   selectors = Array.from(selectAll("select.OPTION"));
 
+  //svuoto tutti gli array
   selectors.forEach((l) => {
     l.remove();
     colOptions = [];
@@ -387,6 +389,7 @@ function chooseColConversion() {
       s = createSelect(false);
       s.class("OPTION RGB");
       s.id(coolorsRGB[i]);
+      s.value(coolorsRGB[i])
       s.style("background-color", bgCoolorsRGB[i]);
 
       optionCtn.child(s);
@@ -394,7 +397,7 @@ function chooseColConversion() {
       s.child(o);
 
       changed = false;
-      console.log(changed)
+      //console.log(changed)
 
       colOptions.push(s);
     }
@@ -403,6 +406,7 @@ function chooseColConversion() {
       s = createSelect(false);
       s.class("OPTION CMYK");
       s.id(coolorsCMYK[i]);
+      s.value(coolorsCMYK[i])
       s.style("background-color", bgCoolorsCMYK[i]);
 
       optionCtn.child(s);
@@ -411,7 +415,7 @@ function chooseColConversion() {
       s.child(o);
 
       changed = false;
-      console.log(changed)
+      //console.log(changed)
 
       colOptions.push(s);
     }
@@ -425,10 +429,11 @@ function chooseColConversion() {
     s.class("OPTION BLACK");
     s.id("black");
     s.style("background-color", "#000000");
+    s.value("black")
     //s.style("color", "#ffffff");
 
     changed = true;
-    console.log(changed)
+    //console.log(changed)
 
     optionCtn.child(s);
     o = s.option("black");
@@ -447,12 +452,26 @@ function chooseColConversion() {
     cooolors = Array.from(selectAll("option", e)); //prendo tutti gli elementi option
     allCoooloors.push([...cooolors]); //e li pusho in un array di array
 
-    let blackOpt= cooolors.find((j)=> j.innerText="black")
-    
-    blackOpt.style("color", "#ffffff")
-    console.log(blackOpt)
+
+//sto cercando di rendere bianche le scritte con il testo nero
+        let blackOpt = cooolors.filter((d) => d.value() == "black");
+        console.log(blackOpt);
+
+        blackOpt.forEach((g) => {
+        g.style.color = "#ffffff";
+        });
 
 
+//funzione che disattiva le prime option
+        let first = cooolors.filter((d) => d.value() == "undefined");
+
+        first.forEach((g) => {
+            g.elt.disabled = true;
+          });
+          
+
+
+//funzione che al change cambia lo sfondo
     e.changed(() => {
 
       index = risoCoolors.find((user) => user.name === e.value().toUpperCase());
@@ -462,12 +481,14 @@ function chooseColConversion() {
       e.style("background-color", col);
 
       changed=true;
-      
     } );
+
+    if(e.value()=="black"){
+        console.log(e)
+        e.style("color", "#ffffff")
+    }
   });
 }
-
-
 
 //convertitore da colori a esadecimale
 function rgbToHex(r, g, b) {
@@ -539,9 +560,8 @@ function infoCheck() {
   }
 
   console.log(imgExists, error, changed);
-  //renderCanva(userData)
 
-  if (imgExists == true && error == false && changed== true ) {
+  if (imgExists == true && error == false && changed== true ) { // se tutto a posto renderizza
     let html = select("html");
     html.style("overflow-y", "scroll");
     html.style("height", "auto");
@@ -561,6 +581,7 @@ function infoCheck() {
 
 
 
+//ALERT
 function Aaalert(){
     
     Aalert = select("#alert");
@@ -571,23 +592,21 @@ function Aaalert(){
     Aalert.style("display", "flex");
     Aalert.style("z-index", "9999");
 
-    setTimeout(function () {
+    setTimeout(function () { //fade di sparizione
       Aalert.addClass("fade-in-alert");
-      //console.log(Aalert);
     }, 1000);
 }
 
 
 
+//RISO EFFECT
 function risoEffect() {
   noStroke();
 
-  //console.log(userData);
   imgG = userData.img;
   imgS = userData.size;
   imgT = userData.threshold;
 
-  //console.log(cnv);
   cnv.resize(imgS, (imgS * imgG.height) / imgG.width);
   clearRiso();
 
@@ -629,6 +648,7 @@ function risoEffect() {
     );
 
     drawRiso();
+
   } else if (userData.colorProfile == "CMYK") {
     JustCyan = extractCMYKChannel(userData.img, "cyan"); //extract cyan from img
     JustMagenta = extractCMYKChannel(userData.img, "magenta");
@@ -675,6 +695,7 @@ function risoEffect() {
     );
 
     drawRiso();
+
   } else if (userData.colorProfile == "BLACK") {
     ditheredImage = ditherImage(imgG, ditherType, imgT);
 
@@ -691,6 +712,8 @@ function risoEffect() {
   }
 }
 
+
+
 //SAVE
 function saveImages() {
   console.log("save");
@@ -700,11 +723,13 @@ function saveImages() {
     redImage.save("redImg", "png");
     blueImage.save("blueImg", "png");
     greenImage.save("greenImg", "png");
+
   } else if (userData.colorProfile == "CMYK") {
     magentaImage.save("magentaImg", "png");
     cyanImage.save("cyanImg", "png");
     yellowImage.save("yellowImg", "png");
     blackImage.save("blackImg", "png");
+
   } else if (userData.colorProfile == "BLACK") {
     risoImage.save("blackImg", "png");
   }
