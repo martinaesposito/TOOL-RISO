@@ -17,7 +17,7 @@ html,body {
 .section {
     margin: 0.5%;
     height: auto;
-    width: 95%;
+    width: 99%;
     
     /* padding-top: 0.5%; */
     padding-bottom: 1%;
@@ -114,7 +114,7 @@ input[type=number]:user-invalid{
     font-size: 1rem;
     color: black;
     font-style: normal;
-    margin:3% 0 3% 0;
+    margin:3% 0 3% 0.5%;
     margin-right: auto;
 }
 
