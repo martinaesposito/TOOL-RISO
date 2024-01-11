@@ -1,0 +1,245 @@
+html,body {
+    box-sizing: border-box;
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-y: hidden;
+}
+
+/* DIV CONTAINER */
+
+#sectionContainer {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0.5%;
+}
+
+.section {
+    margin: 0.5%;
+    height: auto;
+    width: 100%;
+    
+    /* padding-top: 0.5%; */
+    padding-bottom: 1%;
+    border-bottom: 0.5px rgb(118, 118, 118) dashed;
+}
+
+/* INTRUCTIONS */
+p {
+    font-size: 1rem;
+    margin: 0.5%  0.5%  0.5% 0;
+    padding: 0;
+    width: auto;
+    float:left;
+}
+
+
+/* INPUT E SELECT*/
+input, select{
+    margin: 1.5px;
+    border: 1px black solid;
+    padding: 5px;
+    width: auto;
+    border-radius: 5px;
+    background-color: white;
+}
+
+select{
+    padding:2.5px;
+}
+
+.preview{
+    font-style: oblique;
+    color:rgb(118, 118, 118);
+}
+
+.input{
+    font-style: normal;
+    color:black;
+}
+
+input:hover, select:hover {
+    margin: 0;
+    border: black solid 3px;
+}
+
+input[type=file]::file-selector-button {
+    background-color: white;
+    border: 0.5px solid rgb(118, 118, 118) ;
+    border-radius: 2.5px;
+    initial-value:"choose file";
+}
+
+input[type=number]:user-invalid{
+    border: red solid 3px;
+}
+
+
+/* IMMAGINI DI ESEMPI*/
+#imgGallery {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    height: 150px;
+    width: 100%;
+    padding: 1% 0 2% 0;
+    overflow-x: scroll;
+}
+
+#imgGallery::-webkit-scrollbar {
+    display: none;
+}
+
+.imgChoose {
+    box-sizing: border-box;
+    height: 100%;
+    width: auto;
+
+    border: white solid 3px;
+}
+
+.imgChoose:hover {
+    border: black solid 3px;
+    border-radius: 5px;
+}
+
+.chosen{
+    border: black solid 3px;
+    border-radius: 5px;
+}
+
+
+/* RENDER */
+#renderBtn {
+    font-size: 1rem;
+    color: black;
+    font-style: normal;
+    margin:3% 0 3% 0;
+    margin-right: auto;
+}
+
+canvas {
+    display: none;
+  }
+
+  
+/* SAVE */
+#saveBtn {
+    margin:2.5% 0;
+    font-size: 1rem;
+    margin-right: auto;
+    width: auto;
+
+    display:none;
+}
+
+/*ALERT*/
+#alert{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 5px;
+    width:30%;
+    height:30%;
+    border:3px black solid;
+    background-color: white;
+    
+}
+
+.alert{
+    width:100%;
+    text-align: center;
+}
+
+.fade-in-alert{ 
+    animation: fadeIn 1s; 
+    animation-fill-mode: forwards;}
+
+@keyframes fadeIn {
+    100% { opacity: 0; }
+    0% { opacity: 1; }
+  }
+
+  /* ERROR ANIMATION */
+  .bounce {
+    outline: 0;
+    animation-name: bounce;
+    animation-duration: .5s;
+    animation-delay: 0.25s;
+    animation-fill-mode: forwards;
+  }
+  
+  @keyframes bounce {
+    0% {
+      transform: translateX(0px);
+      timing-function: ease-in;
+    }
+    37% {
+      transform: translateX(5px);
+      timing-function: ease-out;
+    }
+    55% {
+      transform: translateX(-5px);
+      timing-function: ease-in;
+    }
+    73% {
+      transform: translateX(4px);
+      timing-function: ease-out;
+    }
+    82% {
+      transform: translateX(-4px);
+      timing-function: ease-in;
+    }
+    91% {
+      transform: translateX(2px);
+      timing-function: ease-out;
+    }
+    96% {
+      transform: translateX(-2px);
+      timing-function: ease-in;
+    }
+    100% {
+      transform: translateX(0px);
+      timing-function: ease-in;
+    }
+  }
+
+
+/* PHONE */
+#tel {
+    display:none;
+}
+
+@media only screen and (max-width: 768px) {
+
+    #sectionContainer {
+        display: none;
+    }
+
+    img{
+        width:80%;
+    }
+
+    #tel{
+        display:flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        width:90%;
+        height:90vh;
+        margin:auto;
+        overflow-y: hidden;
+
+        text-align: center;
+        font-size:3em;
+    }
+
+    #form{
+        display:none;
+    }
+}
