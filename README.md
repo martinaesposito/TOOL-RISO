@@ -1,5 +1,4 @@
 # TOOL-RISO
-Web tool to convert an image using the colours and the dither effect of the RISOP5 library
+## Online converter for images using the colours and the dither effect of the P5.RISO library!
 
-p5.js
 This site was built using [p5.js library](https://p5js.org/) and [p5.riso](https://antiboredom.github.io/p5.riso/)
