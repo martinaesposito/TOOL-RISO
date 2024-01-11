@@ -530,14 +530,12 @@ function infoCheck() {
   //booleana che controlla che sia stata selezionato uno dei colori a disposizione della libreria
   if(changed == false){
     Aaalert()
-    
-    divArray[4].addClass("bounce");
+    divArray[4].addClass("bounce"); // nel caso animazione della sezione che segnala
   }
 
-
+//booleana in caso di errore o mancanza di dati
   if (error == true ) {
-    //alert message
-    Aaalert()
+    Aaalert() //alert message
   }
 
   console.log(imgExists, error, changed);

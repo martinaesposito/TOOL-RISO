@@ -214,7 +214,7 @@ canvas {
 #tel {
     display:none;
 }
-
+/* 
 @media only screen and (max-width: 768px) {
 
     #sectionContainer {
@@ -242,4 +242,4 @@ canvas {
     #form{
         display:none;
     }
-}
+} */
