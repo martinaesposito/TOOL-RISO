@@ -23,7 +23,7 @@ let chooseImage;
 //immagini di esempio
 let allImages = [
   "assets/anelli.jpg",
-  "././assets/ciotole.jpg",
+  "./assets/ciotole.jpg",
   "././assets/vasetti.jpg",
   "././assets/vasone.jpg",
 ];
