@@ -22,10 +22,10 @@ let p6;
 let chooseImage;
 //immagini di esempio
 let allImages = [
-  "/assets/anelli.jpg",
-  "/assets/ciotole.jpg",
-  "/assets/vasetti.jpg",
-  "/assets/vasone.jpg",
+  "./assets/anelli.jpg",
+  "./assets/ciotole.jpg",
+  "./assets/vasetti.jpg",
+  "./assets/vasone.jpg",
 ];
 let imgElements = [];
 let examples; //array con i node delle immagini
@@ -389,7 +389,6 @@ function chooseColConversion() {
       s = createSelect(false);
       s.class("OPTION RGB");
       s.id(coolorsRGB[i]);
-      s.value(coolorsRGB[i])
       s.style("background-color", bgCoolorsRGB[i]);
 
       optionCtn.child(s);
@@ -406,7 +405,6 @@ function chooseColConversion() {
       s = createSelect(false);
       s.class("OPTION CMYK");
       s.id(coolorsCMYK[i]);
-      s.value(coolorsCMYK[i])
       s.style("background-color", bgCoolorsCMYK[i]);
 
       optionCtn.child(s);
@@ -429,8 +427,7 @@ function chooseColConversion() {
     s.class("OPTION BLACK");
     s.id("black");
     s.style("background-color", "#000000");
-    s.value("black")
-    //s.style("color", "#ffffff");
+    s.style("color", "#ffffff");
 
     changed = true;
     //console.log(changed)
@@ -452,41 +449,30 @@ function chooseColConversion() {
     cooolors = Array.from(selectAll("option", e)); //prendo tutti gli elementi option
     allCoooloors.push([...cooolors]); //e li pusho in un array di array
 
+    //funzione che disattiva le prime option
+    let first = cooolors.filter((d) => d.value() == "undefined");
 
-//sto cercando di rendere bianche le scritte con il testo nero
-        let blackOpt = cooolors.filter((d) => d.value() == "black");
-        console.log(blackOpt);
+    first.forEach((g) => {
+      g.elt.disabled = true;
+    });
 
-        blackOpt.forEach((g) => {
-        g.style.color = "#ffffff";
-        });
-
-
-//funzione che disattiva le prime option
-        let first = cooolors.filter((d) => d.value() == "undefined");
-
-        first.forEach((g) => {
-            g.elt.disabled = true;
-          });
-          
-
-
-//funzione che al change cambia lo sfondo
+    //funzione che al change cambia lo sfondo
     e.changed(() => {
-
       index = risoCoolors.find((user) => user.name === e.value().toUpperCase());
       col = rgbToHex(index.color[0], index.color[1], index.color[2]);
 
       console.log(index, col);
       e.style("background-color", col);
 
-      changed=true;
-    } );
+      changed = true;
 
-    if(e.value()=="black"){
-        console.log(e)
-        e.style("color", "#ffffff")
-    }
+      if (e.value() == "black") {
+        console.log(e);
+        e.style("color", "#ffffff");
+      } else {
+        e.style("color", "#000000");
+      }
+    });
   });
 }
 
