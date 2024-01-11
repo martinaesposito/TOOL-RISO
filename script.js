@@ -93,6 +93,7 @@ let error = false; //booleana che controlla che le informazioni siano complete
 let renderBtn;
 let cnv;
 let cnvCtn;
+
 let userData = {
   img: "",
   size: "",
@@ -165,6 +166,10 @@ let risoImage;
 //SAVE
 let saveBtn;
 
+
+
+
+//SETUP
 function setup() {
   pixelDensity(1);
 
@@ -180,6 +185,7 @@ function setup() {
   }
 
   divArray = Array.from(selectAll(".section"));
+
 
   //IMMAGINI DI ESEMPIO
   for (i = 0; i < allImages.length; i++) {
@@ -203,6 +209,7 @@ function setup() {
   p = createP("Choose one of the example images"); //istruzioni
   p2 = createP("or input one of your own (.jpg/.jpeg/.png)");
 
+
   //INPUT
   uploadInput = createFileInput(handleImage); //input dell'immagine utente + callback
 
@@ -212,6 +219,7 @@ function setup() {
   chooseImage.child(uploadInput);
 
   imgElements.forEach(imgSelect); //FUNZIONE DI SELEZIONE DELLE IMMAGINI DI ESEMPIO
+
 
   //SIZE
   p3 = createP("Choose the final size of your image (10-2000):");
@@ -237,6 +245,7 @@ function setup() {
     userSize.class("input");
   });
 
+
   //THRESHOLD
   p4 = createP("Choose the threshold (0-255):");
   userThreshold = createInput("", "number"); //input
@@ -258,13 +267,11 @@ function setup() {
     userThreshold.class("input");
   });
 
+  
   //COLOR PROFILE
   setColourProfile = createSelect(false);
   setColourProfile.id("colourProfile");
   setColourProfile.class("preview");
-
-  // setColourProfile.value("")
-  // setColourProfile.attribute("placeholder", "CMYK")
 
   for (i = 0; i < colProfileOpt.length; i++) {
     oc = setColourProfile.option(colProfileOpt[i]);
@@ -279,14 +286,15 @@ function setup() {
   chooseColorProfile.child(setColourProfile);
 
   chooseColorProfile.changed(() => {
-    chooseColConversion;
+    
+    //changed = false;
+    
     setColourProfile.class("input");
-    
-    changed=false;
-    console.log("cambio")
-     
-    
+    chooseColConversion;
+
+    console.log("cambio");
   });
+
 
   //COLOUR CONVERSION
   optionCtn = createDiv();
@@ -305,6 +313,7 @@ function setup() {
 
   setColourProfile.changed(chooseColConversion);
 
+
   //RENDER
   renderBtn = createInput("Render your preview", "submit");
   renderBtn.id("renderBtn");
@@ -319,12 +328,15 @@ function setup() {
   cnvCtn.child(cnv);
   divCtn.child(cnvCtn);
 
+
   //SAVE
   saveBtn = createInput("Download image", "submit");
   saveBtn.id("saveBtn");
 
   divCtn.child(saveBtn);
 }
+
+
 
 //FUNZIONE DI SELEZIONE DELLE IMMAGINI DI ESEMPIO
 function imgSelect(l) {
@@ -337,6 +349,8 @@ function imgSelect(l) {
     l.toggleClass("chosen");
   });
 }
+
+
 
 //CALLBACK UPLOAD IMAGE
 function handleImage(file) {
@@ -354,6 +368,8 @@ function handleImage(file) {
     console.log("error");
   }
 }
+
+
 
 //COLOR CONVERSION
 function chooseColConversion() {
@@ -376,6 +392,9 @@ function chooseColConversion() {
       optionCtn.child(s);
       o = s.option(coolorsRGB[i]);
       s.child(o);
+      
+      changed = false;
+      console.log(changed)
 
       colOptions.push(s);
     }
@@ -391,12 +410,16 @@ function chooseColConversion() {
 
       s.child(o);
 
+      changed = false;
+      console.log(changed)
+
       colOptions.push(s);
     }
 
-    if ((s.id = "black")) {
+    if ((s.id == "black")) { //se il blocchetto è nero metti la scritta bianca
       s.style("color", "#ffffff");
     }
+
   } else if (setColourProfile.selected() == "BLACK") {
     s = createSelect(false);
     s.class("OPTION BLACK");
@@ -404,7 +427,7 @@ function chooseColConversion() {
     s.style("background-color", "#000000");
     s.style("color", "#ffffff");
 
-    changed=true;
+    changed = true;
     console.log(changed)
 
     optionCtn.child(s);
@@ -425,7 +448,6 @@ function chooseColConversion() {
     allCoooloors.push([...cooolors]); //e li pusho in un array di array
 
     e.changed(() => {
-      //console.log(e.value());
 
       index = risoCoolors.find((user) => user.name === e.value().toUpperCase());
       col = rgbToHex(index.color[0], index.color[1], index.color[2]);
@@ -439,6 +461,8 @@ function chooseColConversion() {
   });
 }
 
+
+
 //convertitore da colori a esadecimale
 function rgbToHex(r, g, b) {
   return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
@@ -450,6 +474,7 @@ function rgbToHex(r, g, b) {
 function infoCheck() {
     imgExists = false;
     error= false;
+    console.log(changed)
 
   userData.size = userSize.value();
   userData.threshold = userThreshold.value();
@@ -465,16 +490,13 @@ function infoCheck() {
     imgElements.forEach((l) => {
       if (l.hasClass("chosen")) {
         imgSrc = l.attribute("src"); //trasformo l'immagine caricata in una p5.image
-        // console.log(imgSrc)
         userData.img = loadImage(imgSrc, risoEffect, () => {
           console.log("errror");
         });
-        //console.log( userData.img )
         imgExists = true;
       }
     });
   } else {
-    //console.log(uploadedImage)
     imgExists = true;
     userData.img = uploadedImage;
     risoEffect();
@@ -482,8 +504,7 @@ function infoCheck() {
 
   divArray.forEach((l) => {
     l.elt.addEventListener("animationend", () => {
-      // When the animation ends, remove the "bounce" class
-      l.removeClass("bounce");
+      l.removeClass("bounce");  // When the animation ends, remove the "bounce" class
     });
   });
 
@@ -494,7 +515,7 @@ function infoCheck() {
       console.log(invalidS);
 
       invalidS.addClass("bounce");
-      void invalidS.offsetHeight;
+    //   void invalidS.offsetHeight;
 
       error = true;
     }
@@ -502,7 +523,7 @@ function infoCheck() {
 
   
   //seleziona uno dei colori a disposizione della libreria
-  if(changed== false){
+  if(changed == false){
     Aaalert()
     
     divArray[4].addClass("bounce");
