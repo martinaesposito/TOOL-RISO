@@ -4,6 +4,11 @@ html,body {
     margin: 0;
     padding: 0;
     overflow-y: hidden;
+
+}
+
+body.loading{
+    cursor: url(assets/fav2.gif), wait;
 }
 
 /* DIV CONTAINER */
@@ -208,6 +213,7 @@ canvas {
       timing-function: ease-in;
     }
   }
+
 
 
 /* PHONE */

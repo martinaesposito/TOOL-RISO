@@ -90,6 +90,8 @@ let imgExists = false; //booleana che controlla il caricamento dell'immagine
 let error = false; //booleana che controlla che le informazioni siano complete
 
 //RENDER
+let body;
+let html;
 let renderBtn;
 let cnv;
 let cnvCtn;
@@ -323,7 +325,7 @@ function setup() {
 
   cnvCtn = createDiv();
   optionCtn.id("cnvCtn");
-  cnv = createCanvas(1000, 400);
+  cnv = createCanvas(2000, 2000);
   cnv.style("display", "none");
   cnvCtn.child(cnv);
   divCtn.child(cnvCtn);
@@ -548,11 +550,11 @@ function infoCheck() {
   console.log(imgExists, error, changed);
 
   if (imgExists == true && error == false && changed== true ) { // se tutto a posto renderizza
-    let html = select("html");
+    html = select("html");
     html.style("overflow-y", "scroll");
     html.style("height", "auto");
 
-    let body = select("body");
+    body = select("body");
     body.style("overflow-y", "scroll");
     body.style("height", "auto");
 
@@ -564,6 +566,7 @@ function infoCheck() {
     saveBtn.mousePressed(saveImages);
   }
 }
+
 
 
 
@@ -589,6 +592,9 @@ function Aaalert(){
 function risoEffect() {
   noStroke();
 
+  //cursor(./assets/fav2.gif);
+  body.class("loading")
+  
   imgG = userData.img;
   imgS = userData.size;
   imgT = userData.threshold;
@@ -634,6 +640,7 @@ function risoEffect() {
     );
 
     drawRiso();
+    endLoading()
 
   } else if (userData.colorProfile == "CMYK") {
     JustCyan = extractCMYKChannel(userData.img, "cyan"); //extract cyan from img
@@ -681,6 +688,7 @@ function risoEffect() {
     );
 
     drawRiso();
+    endLoading()
 
   } else if (userData.colorProfile == "BLACK") {
     ditheredImage = ditherImage(imgG, ditherType, imgT);
@@ -694,10 +702,18 @@ function risoEffect() {
       (imgS * imgG.height) / imgG.width
     );
 
+
     drawRiso();
+    endLoading()
   }
 }
 
+
+//HIDE LOADER
+function endLoading(){
+    //cursor(ARROW)
+    body.class("loading")
+}
 
 
 //SAVE
