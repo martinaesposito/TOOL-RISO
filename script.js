@@ -322,20 +322,6 @@ function setup() {
   divCtn.child(renderBtn);
 
   renderBtn.mousePressed(infoCheck);
-
-  cnvCtn = createDiv();
-  optionCtn.id("cnvCtn");
-  cnv = createCanvas(2000, 2000);
-  cnv.style("display", "none");
-  cnvCtn.child(cnv);
-  divCtn.child(cnvCtn);
-
-
-  //SAVE
-  saveBtn = createInput("Download image", "submit");
-  saveBtn.id("saveBtn");
-
-  divCtn.child(saveBtn);
 }
 
 
@@ -489,7 +475,7 @@ function rgbToHex(r, g, b) {
 function infoCheck() {
     imgExists = false;
     error= false;
-    console.log(changed)
+    //console.log(changed)
 
   userData.size = userSize.value();
   userData.threshold = userThreshold.value();
@@ -550,6 +536,7 @@ function infoCheck() {
   console.log(imgExists, error, changed);
 
   if (imgExists == true && error == false && changed== true ) { // se tutto a posto renderizza
+   
     html = select("html");
     html.style("overflow-y", "scroll");
     html.style("height", "auto");
@@ -558,10 +545,42 @@ function infoCheck() {
     body.style("overflow-y", "scroll");
     body.style("height", "auto");
 
+    
+  //se ha già fatto un giro elimino quanto di precedentemente esistente
+    if (renderBtn.value() == "Update your preview") {
+      clearRiso();
+      let cnvE = select("#cnv");
+      let saveE = select("#saveBtn");
+      let cnvCtnE = select("#cnvCtn");
+      cnvE.remove();
+      saveE.remove();
+      cnvCtnE.remove();
+    }
+
     renderBtn.value("Update your preview");
+    
+    //CANVA
+    cnvCtn = createDiv();
+    cnvCtn.id("cnvCtn");
+
+    imgG = userData.img;
+    imgS = userData.size;
+
+
+    cnv = createCanvas(imgS, (imgS * imgG.height) / imgG.width);
+    console.log(cnv)
+    cnv.id("cnv")
+    cnv.style("display", "block");
+    cnvCtn.child(cnv);
+    divCtn.child(cnvCtn);
+
+
+    //SAVE
+    saveBtn = createInput("Download image", "submit");
+    saveBtn.id("saveBtn");
     saveBtn.style("display", "block");
 
-    cnv.style("display", "block");
+    divCtn.child(saveBtn);
 
     saveBtn.mousePressed(saveImages);
   }
@@ -599,8 +618,6 @@ function risoEffect() {
   imgS = userData.size;
   imgT = userData.threshold;
 
-  cnv.resize(imgS, (imgS * imgG.height) / imgG.width);
-  clearRiso();
 
   if (userData.colorProfile == "RGB") {
     console.log(userData.colorProfile);
@@ -712,7 +729,7 @@ function risoEffect() {
 //HIDE LOADER
 function endLoading(){
     //cursor(ARROW)
-    body.class("loading")
+    body.removeClass("loading")
 }
 
 

@@ -11,8 +11,28 @@ body.loading{
     cursor: url(assets/fav2.gif), wait;
 }
 
-/* DIV CONTAINER */
 
+
+/* ISSUES */
+#report{
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: right;
+    padding: 0.5% 1% ;
+    text-decoration: underline;
+    font-size: 0.9rem;
+    font-style: oblique;
+    color: rgb(118, 118, 118);
+}
+
+#report:hover{
+    color: black;
+}
+
+
+
+/* DIV CONTAINER */
 #sectionContainer {
     display: flex;
     flex-direction: column;
@@ -214,38 +234,3 @@ canvas {
     }
   }
 
-
-
-/* PHONE */
-#tel {
-    display:none;
-}
-/* 
-@media only screen and (max-width: 768px) {
-
-    #sectionContainer {
-        display: none;
-    }
-
-    img{
-        width:80%;
-    }
-
-    #tel{
-        display:flex;
-        align-items: center;
-        flex-direction: column;
-        justify-content: center;
-        width:90%;
-        height:90vh;
-        margin:auto;
-        overflow-y: hidden;
-
-        text-align: center;
-        font-size:3em;
-    }
-
-    #form{
-        display:none;
-    }
-} */
