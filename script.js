@@ -175,6 +175,12 @@ let risoImage;
 let saveBtn;
 
 
+//FOOTER
+let footer;
+let email;
+let github;
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -261,6 +267,7 @@ function setup() {
     userSize.class("input");
   });
 
+
   //THRESHOLD
   p4 = createP("Choose the threshold (0-255):");
   userThreshold = createInput("", "number"); //input
@@ -332,6 +339,14 @@ function setup() {
   divCtn.child(renderBtn);
 
   renderBtn.mousePressed(infoCheck);
+
+
+  //FOOTER
+  footer= createDiv("The tool was developed by Martina Esposito. Send her an <a href='mailto:martiiiesposito@gmail.com'> email </a> or visit her <a href='https://github.com/martinaesposito'> github profile </a>")
+  footer.id("footer")
+
+  divCtn.child(footer)
+
 }
 
 
@@ -490,6 +505,7 @@ function rgbToHex(r, g, b) {
 //CHECK INFO BEFORE RENDERING
 function infoCheck() {
 
+
   imgExists = false;
   error = false;
 
@@ -617,7 +633,7 @@ function infoCheck() {
     imgG = userData.img;
     imgS = userData.size;
 
-    cnv = createCanvas(imgS, imgG.height);
+    cnv = createCanvas(imgS, (imgS * imgG.height) / imgG.width);
     cnv.id("cnv");
     cnv.style("display", "block");
     cnvCtn.child(cnv);
@@ -678,6 +694,7 @@ function Aaalert() {
 //RISO EFFECT
 function risoEffect() {
   noStroke();
+  clearRiso()
 
   imgG = userData.img;
   imgS = userData.size;

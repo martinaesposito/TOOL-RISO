@@ -4,6 +4,7 @@ body {
   font-family: sans-serif;
   margin: 0;
   padding: 0;
+  height:100vh;
   overflow-y: hidden;
 }
 
@@ -40,7 +41,8 @@ a:hover {
   display: flex;
   flex-direction: column;
   width: 99%;
-  margin: 0 0.5%;
+  min-height:95vh;
+  margin: 0 0.5% auto 0.5% ;
 }
 
 .section {
@@ -200,19 +202,19 @@ canvas {
   animation-fill-mode: forwards;
 }
 
+
 /* FOOTER */
-footer{
-    position:absolute;
-    bottom:1%;
-    width:100%;
+#footer{
+    margin: 1%;
+    margin-top: auto;
     
+    align-content: center;
+    justify-content: center;
+
     color:rgb(118, 118, 118);
     text-align: center;
     font-size: 0.9rem;
 }
-
-
-
 
 
 
@@ -269,3 +271,15 @@ footer{
     timing-function: ease-in;
   }
 }
+
+
+/*PHONE*/
+@media only screen and (max-width: 600px) {
+
+    html,
+    body {
+    height:100vh;
+    overflow-y: scroll;
+    }
+
+  }
