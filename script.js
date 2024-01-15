@@ -342,10 +342,10 @@ function setup() {
 
 
   //FOOTER
-  footer= createDiv("The tool was developed by Martina Esposito. Send her an <a href='mailto:martiiiesposito@gmail.com'> email </a> or visit her <a href='https://github.com/martinaesposito'> github profile </a>")
+  footer= createDiv("This tool was developed by Martina Esposito. Send her an <a href='mailto:martiiiesposito@gmail.com' Target= '_blank'> email </a> or visit her <a href='https://github.com/martinaesposito' Target= '_blank'> github profile </a>")
   footer.id("footer")
 
-  divCtn.child(footer)
+  //divCtn.child(footer)
 
 }
 
@@ -505,7 +505,6 @@ function rgbToHex(r, g, b) {
 //CHECK INFO BEFORE RENDERING
 function infoCheck() {
 
-
   imgExists = false;
   error = false;
 
@@ -638,6 +637,8 @@ function infoCheck() {
     cnv.style("display", "block");
     cnvCtn.child(cnv);
     divCtn.child(cnvCtn);
+    cnv.drawingContext('2d', { willReadFrequently: true });
+    
 
     //SAVE
     saveBtn = createInput("Download image", "submit");
