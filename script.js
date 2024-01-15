@@ -345,8 +345,6 @@ function setup() {
   footer= createDiv("This tool was developed by Martina Esposito. Send her an <a href='mailto:martiiiesposito@gmail.com' Target= '_blank'> email </a> or visit her <a href='https://github.com/martinaesposito' Target= '_blank'> github profile </a>")
   footer.id("footer")
 
-  //divCtn.child(footer)
-
 }
 
 
@@ -481,6 +479,10 @@ function chooseColConversion() {
       e.style("background-color", col);
 
       changed = true;
+
+      // let style= window.getComputedStyle(e)
+      // let prop= style.getPropertyValue("background-color")
+      // console.log(prop)
 
       if (e.value() == "black") {
         console.log(e);
@@ -634,10 +636,11 @@ function infoCheck() {
 
     cnv = createCanvas(imgS, (imgS * imgG.height) / imgG.width);
     cnv.id("cnv");
+    cnv.background("yellow")
     cnv.style("display", "block");
     cnvCtn.child(cnv);
     divCtn.child(cnvCtn);
-    cnv.drawingContext('2d', { willReadFrequently: true });
+    // cnv.drawingContext('2d', { willReadFrequently: true });
     
 
     //SAVE
@@ -656,7 +659,7 @@ function infoCheck() {
 //INPUT CHECKER
 function checkUserValues() {
 
-  if (userData.threshold < 0 || userData.threshold > 255 && userData.size  < 10 || userData.size  > 2000) {
+  if ((isNaN(userData.threshold) || userData.threshold < 0 || userData.threshold > 255) && (isNaN(userData.size) || userData.size < 10 || userData.size  > 2000)) {
     error = true;
     return "3";
   }
@@ -680,13 +683,17 @@ function Aaalert() {
   Aalert = select("#alert");
 
   Aalert.removeClass("fade-in-alert");
-  Aalert.style("display", "none");
   Aalert.style("opacity", "100%");
   Aalert.style("display", "flex");
   Aalert.style("z-index", "9999");
 
   setTimeout(function () { //animazione di sparizione
     Aalert.addClass("fade-in-alert");
+
+    Aalert.elt.addEventListener("animationend", () => {
+      Aalert.style("display", "none");
+    })
+
   }, 1000);
 }
 
