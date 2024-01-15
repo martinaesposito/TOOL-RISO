@@ -1,246 +1,271 @@
-html,body {
-    box-sizing: border-box;
-    font-family: sans-serif;
-    margin: 0;
-    padding: 0;
-    overflow-y: hidden;
-
+html,
+body {
+  box-sizing: border-box;
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-y: hidden;
 }
 
-body.loading{
-    cursor: url(assets/fav2.gif), wait;
+body.loading {
+  cursor: url(assets/fav2.gif), wait;
 }
 
 
-
-/* ISSUES */
-#report{
-    display: block;
-    box-sizing: border-box;
-    width: 100%;
-    text-align: right;
-    padding: 0.5% 1% ;
-    text-decoration: underline;
-    font-size: 0.9rem;
-    font-style: oblique;
-    color: rgb(118, 118, 118);
+/* REPORT ISSUES */
+#report {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  text-align: right;
+  padding: 0.5% 1%;
 }
 
-#report:hover{
+
+/* LINK */
+a {
+  text-decoration: underline;
+  font-size: 0.9rem;
+  font-style: oblique;
+  color: rgb(118, 118, 118);
+}
+
+a:hover {
     color: black;
-}
-
+  }
 
 
 /* DIV CONTAINER */
 #sectionContainer {
-    display: flex;
-    flex-direction: column;
-    width: 99%;
-    margin: 0 0.5%;
+  display: flex;
+  flex-direction: column;
+  width: 99%;
+  margin: 0 0.5%;
 }
 
 .section {
-    margin: 0.5%;
-    height: auto;
-    width: 99%;
-    
-    padding-top: 0.5%;
-    padding-bottom: 1%;
-    border-bottom: 0.5px rgb(118, 118, 118) dashed;
-}
+  margin: 0.5%;
+  height: auto;
+  width: 99%;
 
+  padding-top: 0.5%;
+  padding-bottom: 1%;
+  border-bottom: 0.5px rgb(118, 118, 118) dashed;
+}
 
 
 /* INTRUCTIONS */
 p {
-    font-size: 1rem;
-    margin: 0.5%  0.5%  0.5% 0;
-    padding: 0;
-    width: auto;
-    float:left;
+  font-size: 1rem;
+  margin: 0.5% 0.5% 0.5% 0;
+  padding: 0;
+  width: auto;
+  float: left;
 }
 
 
 /* INPUT E SELECT*/
-input, select{
-    margin: 1.5px;
-    border: 1px black solid;
-    padding: 5px;
-    width: auto;
-    min-width: 75px;
-    border-radius: 5px;
-    background-color: white;
+input,
+select {
+  margin: 1.5px;
+  border: 1px black solid;
+  padding: 5px;
+  width: auto;
+  min-width: 75px;
+  border-radius: 5px;
+  background-color: white;
 }
 
-select{
-    padding:2.5px;
+select {
+  padding: 2.5px;
 }
 
-.preview{
-    font-style: oblique;
-    color:rgb(118, 118, 118);
+.preview {
+  font-style: oblique;
+  color: rgb(118, 118, 118);
 }
 
-.input{
-    font-style: normal;
-    color:black;
+.input {
+  font-style: normal;
+  color: black;
 }
 
-input:hover, select:hover {
-    margin: 0;
-    border: black solid 3px;
+input:hover,
+select:hover {
+  margin: 0;
+  border: black solid 3px;
 }
 
-input[type=file]::file-selector-button {
-    background-color: white;
-    border: 0.5px solid rgb(118, 118, 118) ;
-    border-radius: 2.5px;
-    initial-value:"choose file";
+input[type="file"]::file-selector-button {
+  background-color: white;
+  border: 0.5px solid rgb(118, 118, 118);
+  border-radius: 2.5px;
+  initial-value: "choose file";
 }
 
-input[type=number]:out-of-range{
-    border: red solid 3px;
-    
-    animation-name: bounce;
-    animation-duration: .5s;
-    animation-delay: 0.25s;
-    animation-fill-mode: forwards;
+input[type="number"]:out-of-range {
+  border: red solid 3px;
 
+  animation-name: bounce;
+  animation-duration: 0.5s;
+  animation-delay: 0.25s;
+  animation-fill-mode: forwards;
 }
 
 
 /* IMMAGINI DI ESEMPI*/
 #imgGallery {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    height: 150px;
-    width: 100%;
-    padding: 1% 0 2% 0;
-    overflow-x: scroll;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  height: 150px;
+  width: 100%;
+  padding: 1% 0 2% 0;
+  overflow-x: scroll;
 }
 
 #imgGallery::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .imgChoose {
-    box-sizing: border-box;
-    height: 100%;
-    width: auto;
+  box-sizing: border-box;
+  height: 100%;
+  width: auto;
 
-    border: white solid 3px;
+  border: white solid 3px;
 }
 
 .imgChoose:hover {
-    border: black solid 3px;
-    border-radius: 5px;
+  border: black solid 3px;
+  border-radius: 5px;
 }
 
-.chosen{
-    border: black solid 3px;
-    border-radius: 5px;
+.chosen {
+  border: black solid 3px;
+  border-radius: 5px;
 }
-
 
 /* RENDER */
 #renderBtn {
-    font-size: 1rem;
-    color: black;
-    font-style: normal;
-    margin:3% 0 3% 0.5%;
-    margin-right: auto;
+  font-size: 1rem;
+  color: black;
+  font-style: normal;
+  margin: 3% 0 3% 0.5%;
+  margin-right: auto;
 }
 
 canvas {
-    display: none;
-  }
+  display: none;
+}
 
-  
+#cnvCtn{
+    padding-left:0.5%;
+
+}
 /* SAVE */
 #saveBtn {
-    margin:2.5% 0;
-    font-size: 1rem;
-    margin-right: auto;
-    width: auto;
+  margin: 1.5% 0 1.5% 0.5%;
+  font-size: 1rem;
+  margin-right: auto;
+  width: auto;
 
-    display:none;
+  display: none;
 }
 
 /*ALERT*/
-#alert{
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+#alert {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    border-radius: 5px;
-    width:30%;
-    height:30%;
-    border:3px black solid;
-    background-color: white;
-    
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 5px;
+  width: 30%;
+  height: 30%;
+  border: 3px black solid;
+  background-color: white;
 }
 
-.alert{
+.alert {
+  width: 100%;
+  text-align: center;
+}
+
+.fade-in-alert {
+  animation: fadeIn 1s;
+  animation-fill-mode: forwards;
+}
+
+/* FOOTER */
+footer{
+    position:absolute;
+    bottom:1%;
     width:100%;
+    
+    color:rgb(118, 118, 118);
     text-align: center;
+    font-size: 0.9rem;
 }
 
-.fade-in-alert{ 
-    animation: fadeIn 1s; 
-    animation-fill-mode: forwards;}
 
+
+
+
+
+/* ANIMATIONS */
 @keyframes fadeIn {
-    100% { opacity: 0; }
-    0% { opacity: 1; }
+  100% {
+    opacity: 0;
   }
+  0% {
+    opacity: 1;
+  }
+}
 
-  /* ERROR ANIMATION */
-  .bounce {
-    outline: 0;
-    animation-name: bounce;
-    animation-duration: .5s;
-    animation-delay: 0.25s;
-    animation-fill-mode: forwards;
-  }
-  
-  @keyframes bounce {
-    0% {
-      transform: translateX(0px);
-      timing-function: ease-in;
-    }
-    37% {
-      transform: translateX(5px);
-      timing-function: ease-out;
-    }
-    55% {
-      transform: translateX(-5px);
-      timing-function: ease-in;
-    }
-    73% {
-      transform: translateX(4px);
-      timing-function: ease-out;
-    }
-    82% {
-      transform: translateX(-4px);
-      timing-function: ease-in;
-    }
-    91% {
-      transform: translateX(2px);
-      timing-function: ease-out;
-    }
-    96% {
-      transform: translateX(-2px);
-      timing-function: ease-in;
-    }
-    100% {
-      transform: translateX(0px);
-      timing-function: ease-in;
-    }
-  }
+/* ERROR ANIMATION */
+.bounce {
+  outline: 0;
+  animation-name: bounce;
+  animation-duration: 0.5s;
+  animation-delay: 0.25s;
+  animation-fill-mode: forwards;
+}
 
+@keyframes bounce {
+  0% {
+    transform: translateX(0px);
+    timing-function: ease-in;
+  }
+  37% {
+    transform: translateX(5px);
+    timing-function: ease-out;
+  }
+  55% {
+    transform: translateX(-5px);
+    timing-function: ease-in;
+  }
+  73% {
+    transform: translateX(4px);
+    timing-function: ease-out;
+  }
+  82% {
+    transform: translateX(-4px);
+    timing-function: ease-in;
+  }
+  91% {
+    transform: translateX(2px);
+    timing-function: ease-out;
+  }
+  96% {
+    transform: translateX(-2px);
+    timing-function: ease-in;
+  }
+  100% {
+    transform: translateX(0px);
+    timing-function: ease-in;
+  }
+}

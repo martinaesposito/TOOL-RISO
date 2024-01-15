@@ -60,6 +60,9 @@ let selectors;
 let s; //section
 let o; //option
 
+let first; //disable first option
+
+
 let coolorsRGB = ["red", "green", "blue"];
 let bgCoolorsRGB = ["#ff0000", "#00ff00", "#0000ff"];
 
@@ -77,7 +80,7 @@ let allCoooloors = [];
 let index;
 let col;
 
-let changed = false;// boleana che si attiva ogni volta che cambio profilo colore
+let changed = false; // boleana che si attiva ogni volta che cambio profilo colore
 
 //ALERT
 let Aalert; //div di alert
@@ -85,6 +88,9 @@ let Aalert; //div di alert
 //INFO CHECK
 let userValues;
 let invalidS;
+
+let validationMessage;
+
 
 let imgExists = false; //booleana che controlla il caricamento dell'immagine
 let error = false; //booleana che controlla che le informazioni siano complete
@@ -170,6 +176,9 @@ let saveBtn;
 
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 //SETUP
 function setup() {
@@ -178,10 +187,11 @@ function setup() {
   html = select("html");
   body = select("body");
 
+
+  //DIV
   divCtn = createElement("div");
   divCtn.id("sectionContainer");
 
-  //DIV
   for (i = 0; i < divCtnClass.length; i++) {
     d = createElement("div");
     d.id(divCtnClass[i]);
@@ -215,7 +225,7 @@ function setup() {
   p2 = createP("or input one of your own (.jpg/.jpeg/.png)");
 
 
-  //INPUT
+  //IMAGE INPUT
   uploadInput = createFileInput(handleImage); //input dell'immagine utente + callback
 
   chooseImage.child(p);
@@ -225,7 +235,7 @@ function setup() {
 
   imgElements.forEach(imgSelect); //FUNZIONE DI SELEZIONE DELLE IMMAGINI DI ESEMPIO
 
-
+  
   //SIZE
   p3 = createP("Choose the final size of your image (10-2000):");
   userSize = createInput("", "number"); //input
@@ -234,7 +244,7 @@ function setup() {
 
   userSize.attribute("placeholder", "ex.300");
   userSize.attribute("max", "2000");
-  //userSize.attribute("min", "0");
+  userSize.attribute("min", "10");
   userSize.value("");
 
   chooseSize = select("#chooseSize");
@@ -246,12 +256,10 @@ function setup() {
   //   userSize.value("");
   // });
 
-  chooseSize.changed(() => { 
-    console.log(userSize.value())
+  chooseSize.changed(() => {
+    console.log(userSize.value());
     userSize.class("input");
-
   });
-
 
   //THRESHOLD
   p4 = createP("Choose the threshold (0-255):");
@@ -259,7 +267,7 @@ function setup() {
   userThreshold.id("threshold");
   userThreshold.class("preview");
 
-  //userThreshold.attribute("min", "0");
+  userThreshold.attribute("min", "0");
   userThreshold.attribute("max", "255");
   userThreshold.attribute("placeholder", "ex.125");
 
@@ -275,7 +283,7 @@ function setup() {
     userThreshold.class("input");
   });
 
-  
+
   //COLOR PROFILE
   setColourProfile = createSelect(false);
   setColourProfile.id("colourProfile");
@@ -294,13 +302,9 @@ function setup() {
   chooseColorProfile.child(setColourProfile);
 
   chooseColorProfile.changed(() => {
-    
-    //changed = false;
-    
-    setColourProfile.class("input");
-    chooseColConversion;
 
-    //console.log("cambio");
+    setColourProfile.class("input");
+    chooseColConversion();
   });
 
 
@@ -332,6 +336,12 @@ function setup() {
 
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+//IMMAGINI
+
 //FUNZIONE DI SELEZIONE DELLE IMMAGINI DI ESEMPIO
 function imgSelect(l) {
   l.mousePressed(() => {
@@ -343,7 +353,6 @@ function imgSelect(l) {
     l.toggleClass("chosen");
   });
 }
-
 
 
 //CALLBACK UPLOAD IMAGE
@@ -364,10 +373,10 @@ function handleImage(file) {
 }
 
 
+//COLORI
 
 //COLOR CONVERSION
 function chooseColConversion() {
-
   selectors = Array.from(selectAll("select.OPTION"));
 
   //svuoto tutti gli array
@@ -390,7 +399,6 @@ function chooseColConversion() {
       s.child(o);
 
       changed = false;
-      //console.log(changed)
 
       colOptions.push(s);
     }
@@ -403,19 +411,17 @@ function chooseColConversion() {
 
       optionCtn.child(s);
       o = s.option(coolorsCMYK[i], coolorsCMYK[i]);
-
       s.child(o);
 
       changed = false;
-      //console.log(changed)
 
       colOptions.push(s);
     }
 
-    if ((s.id == "black")) { //se il blocchetto è nero metti la scritta bianca
-      s.style("color", "#ffffff");
+    if (s.id == "black") {
+      s.style("color", "#ffffff"); //se il blocchetto è nero metti la scritta bianca
     }
-
+    
   } else if (setColourProfile.selected() == "BLACK") {
     s = createSelect(false);
     s.class("OPTION BLACK");
@@ -423,8 +429,7 @@ function chooseColConversion() {
     s.style("background-color", "#000000");
     s.style("color", "#ffffff");
 
-    changed = true;
-    //console.log(changed)
+    changed = false;
 
     optionCtn.child(s);
     o = s.option("black");
@@ -433,6 +438,7 @@ function chooseColConversion() {
 
     colOptions.push(s); //pusho i selector
   }
+
 
   colOptions.forEach((e) => {
     risoCoolors.forEach((j) => {
@@ -443,12 +449,13 @@ function chooseColConversion() {
     cooolors = Array.from(selectAll("option", e)); //prendo tutti gli elementi option
     allCoooloors.push([...cooolors]); //e li pusho in un array di array
 
-    //funzione che disattiva le prime option
-    let first = cooolors.filter((d) => d.value() == "undefined");
 
+    //funzione che disattiva le prime option
+    first = cooolors.filter((d) => d.value() == "undefined");
     first.forEach((g) => {
       g.elt.disabled = true;
     });
+
 
     //funzione che al change cambia lo sfondo
     e.changed(() => {
@@ -470,6 +477,7 @@ function chooseColConversion() {
   });
 }
 
+
 //convertitore da colori a esadecimale
 function rgbToHex(r, g, b) {
   return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
@@ -477,11 +485,13 @@ function rgbToHex(r, g, b) {
 
 
 
+//RENDER
+
 //CHECK INFO BEFORE RENDERING
 function infoCheck() {
-    imgExists = false;
-    error= false;
-    //console.log(changed)
+
+  imgExists = false;
+  error = false;
 
   userData.size = userSize.value();
   userData.threshold = userThreshold.value();
@@ -511,10 +521,13 @@ function infoCheck() {
 
   divArray.forEach((l) => {
     l.elt.addEventListener("animationend", () => {
-      l.removeClass("bounce");  // When the animation ends, remove the "bounce" class
+      l.removeClass("bounce"); // When the animation ends, remove the "bounce" class
     });
   });
 
+
+
+  //ora che ho definito tutti i colori metto i risultati in un array e faccio il check
   userValues = Array.from(Object.values(userData));
 
   userValues.forEach((e, i) => {
@@ -528,69 +541,74 @@ function infoCheck() {
     }
   });
 
-  // let checkInput=["size","threshold"]
- 
-  // checkInput.forEach((e, i)=>{
-  //   let style= window.getComputedStyle(document.getElementById(e))
-  //   let prop= style.getPropertyValue("border-color")
-  //   console.log(prop)
+  //check input numbers validity
+  validationMessage = 0;
+  validationMessage = checkUserValues();
+  console.log(validationMessage)
 
-  //   if(prop=="rgb(255, 0, 0)"){
-  //     error = true;
-  //   }
-  // })
+  if (validationMessage !== "0") {
 
-  // if(userValues[1]>="2000"){ //size
-  //   divArray[1].addClass("bounce");
+   if (validationMessage == "1" || validationMessage == "2"){ //se uno dei due input non è valido allora aggiungi l'animazione
+    invalidS = divArray[validationMessage];
+    invalidS.addClass("bounce");
 
-  //   error = true;
+    } else { //altrimenti anima entrambi
 
-  // } else {error=false}
+      divArray[1].addClass("bounce");
+      divArray[2].addClass("bounce");
+    }
 
-  // if(userValues[2]>="255"){ //threshold
-  //   divArray[2].addClass("bounce");
+    Aaalert();
+    error = true;
+  }
 
-  //  
 
-  // }else {error=false}
-
-  
-  
   //booleana che controlla che sia stata selezionato uno dei colori a disposizione della libreria
-  if(changed == false){
-    Aaalert()
+  if (changed == false) {
+    Aaalert();
     divArray[4].addClass("bounce"); // nel caso animazione della sezione che segnala
   }
 
-//booleana in caso di errore o mancanza di dati
-  if (error == true ) {
-    Aaalert() //alert message
+
+  //booleana in caso di errore o mancanza di dati
+  if (error == true) {
+    Aaalert(); //alert message
   }
 
+
+
+//ultimo check di tutte le booleane
   console.log(imgExists, error, changed);
 
-  if (imgExists == true && error == false && changed== true ) { // se tutto a posto renderizza
-   
+
+  //se ho già fatto un giro elimino gli elementi preesistenti
+  if (renderBtn.value() == "Update your preview") {
+
+    let cnvE = select("#cnv");
+    let saveE = select("#saveBtn");
+    let cnvCtnE = select("#cnvCtn");
+    
+    if(cnvE && saveE && cnvCtnE){
+      cnvE.remove();
+      saveE.remove();
+      cnvCtnE.remove();
+    }
+  }
+
+//se tutte le booleane quindi sono ok
+  if (imgExists == true && error == false && changed == true) {
+
     html.style("overflow-y", "scroll");
     html.style("height", "auto");
 
     body.style("overflow-y", "scroll");
     body.style("height", "auto");
 
-    
-  //se ha già fatto un giro elimino quanto di precedentemente esistente
-    if (renderBtn.value() == "Update your preview") {
-      clearRiso();
-      let cnvE = select("#cnv");
-      let saveE = select("#saveBtn");
-      let cnvCtnE = select("#cnvCtn");
-      cnvE.remove();
-      saveE.remove();
-      cnvCtnE.remove();
-    }
+    renderBtn.value("Update your preview"); //update il bottone
+    console.log(renderBtn.value())
 
-    renderBtn.value("Update your preview");
-    
+    body.class("loading");
+    console.log("loading")
 
     //CANVA
     cnvCtn = createDiv();
@@ -599,13 +617,11 @@ function infoCheck() {
     imgG = userData.img;
     imgS = userData.size;
 
-    cnv = createCanvas(imgS, (imgS * imgG.height) / imgG.width);
-    console.log(cnv)
-    cnv.id("cnv")
+    cnv = createCanvas(imgS, imgG.height);
+    cnv.id("cnv");
     cnv.style("display", "block");
     cnvCtn.child(cnv);
     divCtn.child(cnvCtn);
-
 
     //SAVE
     saveBtn = createInput("Download image", "submit");
@@ -615,27 +631,46 @@ function infoCheck() {
     divCtn.child(saveBtn);
 
     saveBtn.mousePressed(saveImages);
-
-    body.class("loading")
   }
 }
 
 
 
+//INPUT CHECKER
+function checkUserValues() {
+
+  if (userData.threshold < 0 || userData.threshold > 255 && userData.size  < 10 || userData.size  > 2000) {
+    error = true;
+    return "3";
+  }
+  
+  if (userData.size  < 10 || userData.size  > 2000) {
+    error = true;
+    return "1";
+  } 
+
+  if (userData.threshold < 0 || userData.threshold > 255) {
+    error = true;
+    return "2";
+  } 
+
+  return "0";
+}
+
+
 //ALERT
-function Aaalert(){
-    
-    Aalert = select("#alert");
+function Aaalert() {
+  Aalert = select("#alert");
 
-    Aalert.removeClass("fade-in-alert");
-    Aalert.style("display", "none");
-    Aalert.style("opacity", "100%");
-    Aalert.style("display", "flex");
-    Aalert.style("z-index", "9999");
+  Aalert.removeClass("fade-in-alert");
+  Aalert.style("display", "none");
+  Aalert.style("opacity", "100%");
+  Aalert.style("display", "flex");
+  Aalert.style("z-index", "9999");
 
-    setTimeout(function () { //fade di sparizione
-      Aalert.addClass("fade-in-alert");
-    }, 1000);
+  setTimeout(function () { //animazione di sparizione
+    Aalert.addClass("fade-in-alert");
+  }, 1000);
 }
 
 
@@ -643,15 +678,13 @@ function Aaalert(){
 //RISO EFFECT
 function risoEffect() {
   noStroke();
-  
+
   imgG = userData.img;
   imgS = userData.size;
-  
-  imgG.resize(imgS, (imgS * imgG.height) / imgG.width)
 
-  
+  imgG.resize(imgS, (imgS * imgG.height) / imgG.width);
+
   imgT = userData.threshold;
-
 
   if (userData.colorProfile == "RGB") {
     console.log(userData.colorProfile);
@@ -691,10 +724,10 @@ function risoEffect() {
     );
 
     drawRiso();
-    endLoading()
+    endLoading();
 
   } else if (userData.colorProfile == "CMYK") {
-    JustCyan = extractCMYKChannel(userData.img, "cyan"); //extract cyan from img
+    JustCyan = extractCMYKChannel(userData.img, "cyan"); 
     JustMagenta = extractCMYKChannel(userData.img, "magenta");
     JustYellow = extractCMYKChannel(userData.img, "yellow");
     JustBlack = extractCMYKChannel(userData.img, "black");
@@ -739,7 +772,7 @@ function risoEffect() {
     );
 
     drawRiso();
-    endLoading()
+    endLoading();
 
   } else if (userData.colorProfile == "BLACK") {
     ditheredImage = ditherImage(imgG, ditherType, imgT);
@@ -753,18 +786,18 @@ function risoEffect() {
       (imgS * imgG.height) / imgG.width
     );
 
-
     drawRiso();
-    endLoading()
+    endLoading();
   }
 }
 
 
 //HIDE LOADER
-function endLoading(){
-    //cursor(ARROW)
-    body.removeClass("loading")
+function endLoading() {
+  body.removeClass("loading");
+  console.log("loading ENDED")
 }
+
 
 
 //SAVE
@@ -782,8 +815,5 @@ function saveImages() {
     cyanImage.save("cyanImg", "png");
     yellowImage.save("yellowImg", "png");
     blackImage.save("blackImg", "png");
-
-  } else if (userData.colorProfile == "BLACK") {
-    risoImage.save("blackImg", "png");
-  }
+  } 
 }

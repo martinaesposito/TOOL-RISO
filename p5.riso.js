@@ -201,9 +201,6 @@ function drawRiso() {
   p.blendMode(p.MULTIPLY);
   Riso.channels.forEach(c => c.draw());
   p.blendMode(p.BLEND);
-
-  let body=select("body")
-  body.removeClass("loading")
 }
 
 function exportRiso() {
