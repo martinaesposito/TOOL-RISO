@@ -36,7 +36,8 @@ body.loading{
 #sectionContainer {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 99%;
+    margin: 0 0.5%;
 }
 
 .section {
@@ -44,10 +45,12 @@ body.loading{
     height: auto;
     width: 99%;
     
-    /* padding-top: 0.5%; */
+    padding-top: 0.5%;
     padding-bottom: 1%;
     border-bottom: 0.5px rgb(118, 118, 118) dashed;
 }
+
+
 
 /* INTRUCTIONS */
 p {
@@ -65,6 +68,7 @@ input, select{
     border: 1px black solid;
     padding: 5px;
     width: auto;
+    min-width: 75px;
     border-radius: 5px;
     background-color: white;
 }
@@ -95,8 +99,14 @@ input[type=file]::file-selector-button {
     initial-value:"choose file";
 }
 
-input[type=number]:user-invalid{
+input[type=number]:out-of-range{
     border: red solid 3px;
+    
+    animation-name: bounce;
+    animation-duration: .5s;
+    animation-delay: 0.25s;
+    animation-fill-mode: forwards;
+
 }
 
 

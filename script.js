@@ -175,6 +175,9 @@ let saveBtn;
 function setup() {
   pixelDensity(1);
 
+  html = select("html");
+  body = select("body");
+
   divCtn = createElement("div");
   divCtn.id("sectionContainer");
 
@@ -227,10 +230,11 @@ function setup() {
   p3 = createP("Choose the final size of your image (10-2000):");
   userSize = createInput("", "number"); //input
   userSize.id("size");
-  userSize.attribute("placeholder", "ex.300");
-
   userSize.class("preview");
+
+  userSize.attribute("placeholder", "ex.300");
   userSize.attribute("max", "2000");
+  //userSize.attribute("min", "0");
   userSize.value("");
 
   chooseSize = select("#chooseSize");
@@ -238,13 +242,14 @@ function setup() {
   chooseSize.child(p3);
   chooseSize.child(userSize);
 
-  chooseSize.mouseClicked(() => {
-    userSize.value("");
-  });
+  // chooseSize.mouseClicked(() => {
+  //   userSize.value("");
+  // });
 
-  chooseSize.changed(() => {
-    console.log(userSize.value());
+  chooseSize.changed(() => { 
+    console.log(userSize.value())
     userSize.class("input");
+
   });
 
 
@@ -254,10 +259,11 @@ function setup() {
   userThreshold.id("threshold");
   userThreshold.class("preview");
 
+  //userThreshold.attribute("min", "0");
   userThreshold.attribute("max", "255");
+  userThreshold.attribute("placeholder", "ex.125");
 
   userThreshold.value("");
-  userThreshold.attribute("placeholder", "ex.125");
 
   chooseThreshold = select("#chooseThreshold");
 
@@ -510,6 +516,7 @@ function infoCheck() {
   });
 
   userValues = Array.from(Object.values(userData));
+
   userValues.forEach((e, i) => {
     if (e == "") {
       invalidS = divArray[i];
@@ -521,6 +528,33 @@ function infoCheck() {
     }
   });
 
+  // let checkInput=["size","threshold"]
+ 
+  // checkInput.forEach((e, i)=>{
+  //   let style= window.getComputedStyle(document.getElementById(e))
+  //   let prop= style.getPropertyValue("border-color")
+  //   console.log(prop)
+
+  //   if(prop=="rgb(255, 0, 0)"){
+  //     error = true;
+  //   }
+  // })
+
+  // if(userValues[1]>="2000"){ //size
+  //   divArray[1].addClass("bounce");
+
+  //   error = true;
+
+  // } else {error=false}
+
+  // if(userValues[2]>="255"){ //threshold
+  //   divArray[2].addClass("bounce");
+
+  //  
+
+  // }else {error=false}
+
+  
   
   //booleana che controlla che sia stata selezionato uno dei colori a disposizione della libreria
   if(changed == false){
@@ -537,11 +571,9 @@ function infoCheck() {
 
   if (imgExists == true && error == false && changed== true ) { // se tutto a posto renderizza
    
-    html = select("html");
     html.style("overflow-y", "scroll");
     html.style("height", "auto");
 
-    body = select("body");
     body.style("overflow-y", "scroll");
     body.style("height", "auto");
 
@@ -559,13 +591,13 @@ function infoCheck() {
 
     renderBtn.value("Update your preview");
     
+
     //CANVA
     cnvCtn = createDiv();
     cnvCtn.id("cnvCtn");
 
     imgG = userData.img;
     imgS = userData.size;
-
 
     cnv = createCanvas(imgS, (imgS * imgG.height) / imgG.width);
     console.log(cnv)
@@ -583,9 +615,10 @@ function infoCheck() {
     divCtn.child(saveBtn);
 
     saveBtn.mousePressed(saveImages);
+
+    body.class("loading")
   }
 }
-
 
 
 
@@ -610,12 +643,13 @@ function Aaalert(){
 //RISO EFFECT
 function risoEffect() {
   noStroke();
-
-  //cursor(./assets/fav2.gif);
-  body.class("loading")
   
   imgG = userData.img;
   imgS = userData.size;
+  
+  imgG.resize(imgS, (imgS * imgG.height) / imgG.width)
+
+  
   imgT = userData.threshold;
 
 
