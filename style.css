@@ -42,11 +42,11 @@ a:hover {
   flex-direction: column;
   width: 99%;
   min-height:91.5vh;
-  margin: 0 0.5% auto 0.5% ;
+  margin: 0 0.5vh auto 0.5vh ;
 }
 
 .section {
-  margin: 0.5%;
+  margin: 0.5vh;
   height: auto;
   width: 99%;
 
