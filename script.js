@@ -24,8 +24,8 @@ let chooseImage;
 let allImages = [
   "assets/anelli.jpg",
   "./assets/ciotole.jpg",
+  "././assets/donna.jpg",
   "././assets/vasetti.jpg",
-  "././assets/vasone.jpg",
 ];
 let imgElements = [];
 let examples; //array con i node delle immagini
@@ -361,9 +361,11 @@ function imgSelect(l) {
     imgElements.forEach((l) => {
       if (l.hasClass("chosen")) {
         l.removeClass("chosen");
+        
       }
     });
     l.toggleClass("chosen");
+    console.log(l)
   });
 }
 
@@ -372,13 +374,10 @@ function imgSelect(l) {
 function handleImage(file) {
   if (file.type === "image") {
     uploadedImage = createImg(file.data, "");
-    uploadedImage.hide();
+    uploadedImage.hide()
 
     imgSrc = uploadedImage.attribute("src"); //trasformo l'immagine caricata in una p5.image
-    console.log(imgSrc);
-    uploadedImage = loadImage(imgSrc);
-
-    console.log(uploadedImage);
+    
   } else {
     uploadedImage = null;
     console.log("error");
@@ -531,9 +530,16 @@ function infoCheck() {
       }
     });
   } else {
+
+    uploadedImage = loadImage(imgSrc, 
+      ()=>{ console.log("good");risoEffect()}, 
+      ()=>{ console.log("Error loading image:", error);
+    }) ;
+
+    console.log(uploadedImage);
+
     imgExists = true;
     userData.img = uploadedImage;
-    risoEffect();
   }
 
   divArray.forEach((l) => {
@@ -603,12 +609,17 @@ function infoCheck() {
 
     let cnvE = select("#cnv");
     let saveE = select("#saveBtn");
+    console.log(saveE)
     let cnvCtnE = select("#cnvCtn");
     
     if(cnvE && saveE && cnvCtnE){
       cnvE.remove();
       saveE.remove();
       cnvCtnE.remove();
+
+      console.log("entrato")
+    //risoEffect()
+    
     }
   }
 
@@ -626,31 +637,6 @@ function infoCheck() {
 
     body.class("loading");
     console.log("loading")
-
-    //CANVA
-    cnvCtn = createDiv();
-    cnvCtn.id("cnvCtn");
-
-    imgG = userData.img;
-    imgS = userData.size;
-
-    cnv = createCanvas(imgS, (imgS * imgG.height) / imgG.width);
-    cnv.id("cnv");
-    cnv.background("yellow")
-    cnv.style("display", "block");
-    cnvCtn.child(cnv);
-    divCtn.child(cnvCtn);
-    // cnv.drawingContext('2d', { willReadFrequently: true });
-    
-
-    //SAVE
-    saveBtn = createInput("Download image", "submit");
-    saveBtn.id("saveBtn");
-    saveBtn.style("display", "block");
-
-    divCtn.child(saveBtn);
-
-    saveBtn.mousePressed(saveImages);
   }
 }
 
@@ -702,14 +688,37 @@ function Aaalert() {
 //RISO EFFECT
 function risoEffect() {
   noStroke();
-  clearRiso()
+  clearRiso();
 
   imgG = userData.img;
   imgS = userData.size;
+  imgT = userData.threshold;
 
   imgG.resize(imgS, (imgS * imgG.height) / imgG.width);
 
-  imgT = userData.threshold;
+  //CANVA
+  cnvCtn = createDiv();
+  cnvCtn.id("cnvCtn");
+
+  cnv = createCanvas(imgG.width, imgG.height);
+  cnv.id("cnv");
+  cnv.style("display", "block");
+  cnvCtn.child(cnv);
+  divCtn.child(cnvCtn);
+  // cnv.drawingContext('2d', { willReadFrequently: true });
+  console.log(cnv);
+
+  //SAVE
+  
+  saveBtn = createInput("Download image", "submit");
+  saveBtn.id("saveBtn");
+  saveBtn.style("display", "block");
+
+  divCtn.child(saveBtn);
+
+  saveBtn.mousePressed(saveImages);
+ 
+
 
   if (userData.colorProfile == "RGB") {
     console.log(userData.colorProfile);
@@ -750,9 +759,8 @@ function risoEffect() {
 
     drawRiso();
     endLoading();
-
   } else if (userData.colorProfile == "CMYK") {
-    JustCyan = extractCMYKChannel(userData.img, "cyan"); 
+    JustCyan = extractCMYKChannel(userData.img, "cyan");
     JustMagenta = extractCMYKChannel(userData.img, "magenta");
     JustYellow = extractCMYKChannel(userData.img, "yellow");
     JustBlack = extractCMYKChannel(userData.img, "black");
@@ -798,9 +806,10 @@ function risoEffect() {
 
     drawRiso();
     endLoading();
-
   } else if (userData.colorProfile == "BLACK") {
     ditheredImage = ditherImage(imgG, ditherType, imgT);
+
+    console.log(ditheredImage);
 
     black = new Riso(userData.colorConversion[0]);
     risoImage = black.image(
