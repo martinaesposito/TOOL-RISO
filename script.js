@@ -523,23 +523,25 @@ function infoCheck() {
     imgElements.forEach((l) => {
       if (l.hasClass("chosen")) {
         imgSrc = l.attribute("src"); //trasformo l'immagine caricata in una p5.image
-        userData.img = loadImage(imgSrc, risoEffect, () => {
-          console.log("errror");
-        });
+        // userData.img = loadImage(imgSrc, risoEffect, () => {
+        //   console.log("errror");
+        // });
         imgExists = true;
+        userData.img =imgSrc
       }
     });
   } else {
 
-    uploadedImage = loadImage(imgSrc, 
-      ()=>{ console.log("good");risoEffect()}, 
-      ()=>{ console.log("Error loading image:", error);
-    }) ;
+    // uploadedImage = loadImage(imgSrc, 
+    //   ()=>{ console.log("good");risoEffect()}, 
+    //   ()=>{ console.log("Error loading image:", error);
+    // }) ;
 
-    console.log(uploadedImage);
+   // console.log(uploadedImage);
 
     imgExists = true;
-    userData.img = uploadedImage;
+    userData.img =imgSrc
+    //userData.img = uploadedImage;
   }
 
   divArray.forEach((l) => {
@@ -635,6 +637,10 @@ function infoCheck() {
     renderBtn.value("Update your preview"); //update il bottone
     console.log(renderBtn.value())
 
+    userData.img = loadImage(imgSrc, 
+      risoEffect, 
+      () => {console.log("errror"); });
+
     body.class("loading");
     console.log("loading")
   }
@@ -709,7 +715,6 @@ function risoEffect() {
   console.log(cnv);
 
   //SAVE
-  
   saveBtn = createInput("Download image", "submit");
   saveBtn.id("saveBtn");
   saveBtn.style("display", "block");
@@ -717,7 +722,6 @@ function risoEffect() {
   divCtn.child(saveBtn);
 
   saveBtn.mousePressed(saveImages);
- 
 
 
   if (userData.colorProfile == "RGB") {
